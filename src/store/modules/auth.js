@@ -35,7 +35,6 @@ const actions = {
   [AUTH_REQUEST]: async ({ commit }, data) => {
     let response = await LoginService.login(data);
     if (response) {
-      console.log(response);
       localStorage.setItem("user_id", response.user_id);
       commit(AUTH_SUCCESS, response);
       router.push('/');
