@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <router-link class="navbar-brand brand-logo" to="dashboard">
+      <router-link class="navbar-brand brand-logo" to="">
         <img src="@/assets/images/logo.png" class="mr-2" alt="logo" />
       </router-link>
-      <router-link to="/dashboard" class="navbar-brand brand-logo-mini">
+      <router-link to="" class="navbar-brand brand-logo-mini">
         <img src="@/assets/images/logo.png" alt="logo" />
       </router-link>
     </div>
@@ -51,10 +51,6 @@
             :class="`dropdown-menu dropdown-menu-right navbar-dropdown ${is_profile_open? 'show' :''}`"
             aria-labelledby="profileDropdown"
           >
-            <a class="dropdown-item">
-              <i class="ti-settings text-primary"></i>
-              Settings
-            </a>
             <a class="dropdown-item" @click="logout">
               <i class="ti-power-off text-primary"></i>
               Logout

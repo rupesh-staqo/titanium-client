@@ -21705,7 +21705,7 @@ border-bottom-right-radius: 10px;
     top: 0;
     right: 0;
     opacity: 0.5;
-  background: url('../images/invoice-bg.svg') no-repeat right bottom;
+  /* background: url('../images/invoice-bg.svg') no-repeat right bottom; */
   z-index: -5;
 }
 .bgtext {
@@ -21950,7 +21950,7 @@ display: inline-block;
 } */
 
 .selected_prod {
-  height: 350px;
+  height: 550px;
 }
 .selected_prod_sales {
   height: 450px;
