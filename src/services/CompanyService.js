@@ -84,7 +84,7 @@ export default class CompanyService {
         }
     }
 
-    static async getCarByCompanyId(company_id, page) {
+    static async getCarByCompanyId(id, page) {
         try {
             let response = await Axios(
                 `${[API_URL]}car/read.php`,
@@ -94,8 +94,26 @@ export default class CompanyService {
                     //     Authorization: "Bearer " + store.getters.access_token
                     // }
                     params: {
-                        company_id: company_id,
+                        company_id: id,
                         page: page
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            (new ErrorHandler(error)).init();
+            return false;
+        }
+    }
+
+    static async getAddress(id){
+        try {
+            let response = await Axios(
+                `${[API_URL]}company/address.php`,
+                {
+                    method: 'GET',
+                    params: {
+                        company_id: id
                     }
                 }
             );

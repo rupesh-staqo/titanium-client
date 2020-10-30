@@ -5,25 +5,25 @@
         <div class="card-body">
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
-              <div class="bgtext float-left">Company</div>
+              <div class="bgtext float-left">{{company.name}}</div>
             </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <img
                 src="@/assets/images/code.svg"
-                class="float-left d-none d-sm-block d-md-block"
-              />
-              <div class="helptxt text-gpblue mt-2">Company Name</div>
-              <div class="main_label mb-2">{{ company.name }}</div>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-              <img
-                src="@/assets/images/date.svg"
                 class="float-left d-none d-sm-block d-md-block"
               />
               <div class="helptxt text-gpblue mt-2">Company Id</div>
               <div class="main_label mb-2">{{ company.company_id }}</div>
             </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <img
+                src="@/assets/images/date.svg"
+                class="float-left d-none d-sm-block d-md-block"
+              />
+              <div class="helptxt text-gpblue mt-2">Total Cars</div>
+              <div class="main_label mb-2">{{ company.total_car }}</div>
+            </div>            
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <img
                 src="@/assets/images/code1.svg"
                 class="float-left d-none d-sm-block d-md-block"

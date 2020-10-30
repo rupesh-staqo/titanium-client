@@ -47,12 +47,12 @@ export default new Router({
         },
         {
           path:'company',
-          name:'company',
           component: EmptyLayout,
           children:[
             {
               path:'',
-              component: Company
+              component: Company,
+              name:'company',
             },
             {
               path:':id',

@@ -23,12 +23,20 @@
               <div class="card-body">
                 <h4 class="mb-3">Upload Image</h4>
                 <div class="row">
-                  <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <input
                       type="file"
                       accept="image/*"
                       @change="onFileChange"
                     />
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <b-button
+                      v-b-modal.update-address
+                      class="btn btn-primary btn-sm"
+                    >
+                      Update Address</b-button
+                    >
                   </div>
                 </div>
               </div>
@@ -64,6 +72,7 @@
         </div>
       </div>
     </div>
+    <AddressModal />
   </div>
 </template>
 <script>
@@ -72,10 +81,12 @@ import CarBox from "@/components/Authenticated/Company/CarBox";
 import CompanyService from "@/services/CompanyService";
 import CompanyFactory from "@/factories/CompanyFactory";
 import CarFactory from "@/factories/CarFactory";
+import AddressModal from "@/components/Authenticated/Company/AddressModal";
 export default {
   name: "Company",
   components: {
     CarBox,
+    AddressModal,
     CompanyHeader,
   },
   data() {
@@ -126,8 +137,11 @@ export default {
           vm.image = e.target.result;
         };
         reader.readAsDataURL(file);
-        let response = await CompanyService.uploadLogo(this.company_id, this.logo);
-        if(response){
+        let response = await CompanyService.uploadLogo(
+          this.company_id,
+          this.logo
+        );
+        if (response) {
           this.$swal(response.message);
         }
       }
