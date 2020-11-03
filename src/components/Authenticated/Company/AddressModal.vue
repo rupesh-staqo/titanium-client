@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-modal
-      id="update-address"
-      title="Address Update"
-      ref="modal"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver v-slot="{ passes }">
+      <b-modal
+        id="update-address"
+        title="Address Update"
+        ref="modal"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok.prevent="passes(() => handleSubmit())"
+      >
         <form ref="form" @submit.stop.prevent="handleSubmit">
           <ValidationProvider
             name="address"
@@ -59,7 +59,7 @@
           </ValidationProvider>
           <ValidationProvider
             name="postal code"
-            rules="required"
+            rules="required|numeric|length:6"
             v-slot="{ errors }"
           >
             <b-form-group
@@ -70,6 +70,7 @@
               <b-form-input
                 id="postalCode-input"
                 v-model="postal_code"
+                maxlength="6"
                 required
               ></b-form-input>
             </b-form-group>
@@ -93,7 +94,7 @@
           </ValidationProvider>
           <ValidationProvider
             name="latitude"
-            rules="required"
+            rules="required|double"
             v-slot="{ errors }"
           >
             <b-form-group
@@ -110,7 +111,7 @@
           </ValidationProvider>
           <ValidationProvider
             name="longitude"
-            rules="required"
+            rules="required|double"
             v-slot="{ errors }"
           >
             <b-form-group
@@ -126,39 +127,41 @@
             </b-form-group>
           </ValidationProvider>
         </form>
-      </ValidationObserver>
-    </b-modal>
+      </b-modal>
+    </ValidationObserver>
   </div>
 </template>
 <script>
-import CompanyService from "@/services/CompanyService"
-import AddressFactory from "@/factories/AddressFactory"
+import { mapFields } from "vuex-map-fields";
+import { mapMutations } from "vuex";
+import CompanyService from "@/services/CompanyService";
+import AddressFactory from "@/factories/AddressFactory";
 export default {
-  name:"AddressModal",
+  name: "AddressModal",
   data() {
     return {
-      addr1: "",
-      city: "",
-      region: "",
-      postal_code: "",
-      country: "",
-      latitude: "",
-      longitude: "",
-      company_id:this.$route.params.id,
+      company_id: this.$route.params.id,
     };
   },
-  async created(){
-      console.log(this.company_id);
-      let response = await CompanyService.getAddress(this.company_id);
-      console.log(response.data);
-      let address = AddressFactory.createFromJson(response.data);
-      if(address){
-        this.addr1 = address.addr1;
-
-      }
-
+  computed: {
+    ...mapFields("address", [
+      "addr1",
+      "city",
+      "region",
+      "postal_code",
+      "country",
+      "latitude",
+      "longitude",
+    ]),
+  },
+  async created() {
+    this.SET_COMPANY_ID(this.company_id);
+    let response = await CompanyService.getAddress(this.company_id);
+    let address = AddressFactory.createFromJson(response.data);
+    this.SET_ADDRESS(address);
   },
   methods: {
+    ...mapMutations("address", ["SET_COMPANY_ID","SET_ADDRESS"]),
     resetModal() {
       this.name = "";
       this.nameState = null;
@@ -169,10 +172,15 @@ export default {
       // Trigger submit handler
       this.handleSubmit();
     },
-    handleSubmit() {
+    async handleSubmit() {
       // Push the name to submitted names
       // Hide the modal manually
-      
+      let response = await CompanyService.createAddress();
+        this.$swal({
+          icon: "success",
+          text: response.message,
+          timer: 1500
+        });
       this.$nextTick(() => {
         this.$bvModal.hide("update-address");
       });

@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { API_URL } from "../utils/api"
 import ErrorHandler from "../utils/ErrorHandler";
+import store from "../store";
 export default class CompanyService {
     static async getCompaines() {
         try {
@@ -115,6 +116,25 @@ export default class CompanyService {
                     params: {
                         company_id: id
                     }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            (new ErrorHandler(error)).init();
+            return false;
+        }
+    }
+
+    static async createAddress(){
+        try {
+            let response = await Axios(
+                `${[API_URL]}company/address.php`,
+                {
+                    method: 'POST',
+                    // headers: {
+                    //     Authorization: "Bearer " + store.getters.access_token
+                    // }
+                    data: store.state.address
                 }
             );
             return response.data;
