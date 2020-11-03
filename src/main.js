@@ -26,6 +26,19 @@ const requireComponent = require.context(
   /[A-Z]\w+\.(vue|js)$/
 )
 
+extend("postal_code", {
+  validate: (value, { country }) => {
+    if ("United States" == country) {
+      return /^[0-9]{5}(?:-[0-9]{4})?$/.test(value);
+    } else if ("Canada" == country) {
+      return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(value);
+    }
+    return true;
+  },
+  message: "Postal code is invalid.",
+  params: [{ name: "country", isTarget: true }]
+});
+
 requireComponent.keys().forEach(fileName => {
   // Get component config
   const componentConfig = requireComponent(fileName)

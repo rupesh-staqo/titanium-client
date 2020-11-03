@@ -59,7 +59,7 @@
           </ValidationProvider>
           <ValidationProvider
             name="postal code"
-            rules="required|numeric|length:6"
+            rules="required|postal_code:country"
             v-slot="{ errors }"
           >
             <b-form-group
@@ -70,7 +70,6 @@
               <b-form-input
                 id="postalCode-input"
                 v-model="postal_code"
-                maxlength="6"
                 required
               ></b-form-input>
             </b-form-group>
