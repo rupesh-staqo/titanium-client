@@ -154,10 +154,10 @@ export default {
     ]),
   },
   async created() {
-    this.SET_COMPANY_ID(this.company_id);
     let response = await CompanyService.getAddress(this.company_id);
     let address = AddressFactory.createFromJson(response.data);
     this.SET_ADDRESS(address);
+    this.SET_COMPANY_ID(this.company_id);
   },
   methods: {
     ...mapMutations("address", ["SET_COMPANY_ID","SET_ADDRESS"]),
